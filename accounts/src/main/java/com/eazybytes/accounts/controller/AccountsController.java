@@ -1,6 +1,7 @@
 package com.eazybytes.accounts.controller;
 
 import com.eazybytes.accounts.constants.AccountConstants;
+import com.eazybytes.accounts.dto.AccountsContactInfoDto;
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ErrorResponseDto;
 import com.eazybytes.accounts.dto.ResponseDto;
@@ -40,6 +41,9 @@ public class AccountsController {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
+    AccountsContactInfoDto accountsContactInfoDto;
 
     @Autowired
     public AccountsController(IAccountsService accountsService) {
@@ -124,5 +128,10 @@ description = "Record was found")
     @GetMapping("/maven-version")
     public ResponseEntity<String> getMavenVersion(){
         return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("MAVEN_HOME"));
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo(){
+        return ResponseEntity.status(HttpStatus.OK).body(accountsContactInfoDto);
     }
 }
