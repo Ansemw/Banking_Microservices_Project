@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,21 @@ import org.springframework.web.bind.annotation.*;
 description = "Using these APIs we can create a customer amd account, update them, delete them and " +
         "find info about existing customers and accounts")
 @RestController
-@RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
+@RequestMapping(path = "/accounts", produces = MediaType.APPLICATION_JSON_VALUE)
+//@AllArgsConstructor removed to include build version
 @Validated
 public class AccountsController {
 
 
     IAccountsService accountsService;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @Autowired
+    public AccountsController(IAccountsService accountsService) {
+        this.accountsService = accountsService;
+    }
 
 @Operation(description = "This Api is used for creating a customer as well as an account for the same customer",
 summary = "Create Account and Customer Rest Api")
@@ -97,5 +106,9 @@ description = "Record was found")
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ResponseDto(AccountConstants.STATUS_417,AccountConstants.MESSAGE_417_DELETE));
 
+    }
+    @GetMapping("/version")
+    public ResponseEntity<String> getVersion(){
+        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
     }
 }
