@@ -2,12 +2,15 @@ package com.bank.loans.controller;
 
 import com.bank.loans.constants.LoanConstants;
 import com.bank.loans.dto.LoanDto;
+import com.bank.loans.dto.LoansContactInfoDto;
 import com.bank.loans.dto.ResponseDto;
 import com.bank.loans.service.IloanService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,12 @@ public class LoanController {
 
     @Autowired
     IloanService service;
+
+    @Autowired
+    LoansContactInfoDto loansContactInfoDto;
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createLoan(@RequestParam
@@ -52,5 +61,15 @@ public class LoanController {
         service.deleteLoan(mobileNumber);
          return ResponseEntity.status(Integer.parseInt(LoanConstants.STATUS_200))
             .body(new ResponseDto(LoanConstants.STATUS_200,LoanConstants.MESSAGE_200));
+    }
+
+    @GetMapping("/version")
+    public ResponseEntity<String> getVersion(){
+        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo(){
+        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
     }
  }

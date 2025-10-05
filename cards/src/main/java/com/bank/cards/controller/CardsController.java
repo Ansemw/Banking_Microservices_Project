@@ -2,11 +2,13 @@ package com.bank.cards.controller;
 
 import com.bank.cards.constants.CardConstants;
 import com.bank.cards.dto.CardDto;
+import com.bank.cards.dto.CardsContactInfoDto;
 import com.bank.cards.dto.ResponseDto;
 import com.bank.cards.service.IcardsService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,12 @@ public class CardsController {
 
     @Autowired
     IcardsService service;
+
+    @Autowired
+    CardsContactInfoDto cardsContactInfoDto;
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createCard(@RequestParam
@@ -65,5 +73,15 @@ public class CardsController {
         else
             return ResponseEntity.status(Integer.parseInt(CardConstants.STATUS_417))
                     .body(new ResponseDto(CardConstants.STATUS_417,CardConstants.MESSAGE_417_DELETE));
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<CardsContactInfoDto> getContactInfo(){
+        return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoDto);
+    }
+
+    @GetMapping("/version")
+    public ResponseEntity<String> getVersion(){
+        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
     }
 }

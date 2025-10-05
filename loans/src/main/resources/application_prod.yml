@@ -6,8 +6,8 @@ spring:
 build:
   version: "4.0"
 
-cards:
-  message: "Welcome to accounts related prod APIs "
+loans:
+  message: "Welcome to loans related prod APIs "
   contactDetails:
     name: "Anurag Semwal - Prod Lead"
     email: "anurag@prod.com"

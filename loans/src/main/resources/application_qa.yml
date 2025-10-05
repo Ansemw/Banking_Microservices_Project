@@ -6,10 +6,10 @@ spring:
 build:
   version: "2.0"
 
-cards:
-  message: "Welcome to accounts related QA APIs "
+loans:
+  message: "Welcome to loans related QA APIs "
   contactDetails:
-    name: "Anurag Semwal - QA Lead"
+    name: "Anurag Semwal - qa Lead"
     email: "anurag@qa.com"
   onCallSupport:
     - (666) 265-3765
