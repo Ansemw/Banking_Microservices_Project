@@ -1,13 +1,8 @@
-spring:
-  config:
-    activate:
-      on-profile: "prod"
-
 build:
   version: "4.0"
 
-loans:
-  message: "Welcome to loans related prod APIs "
+accounts:
+  message: "Welcome to accounts related prod APIs "
   contactDetails:
     name: "Anurag Semwal - Prod Lead"
     email: "anurag@prod.com"
